@@ -1,0 +1,26 @@
+{
+  "schema": "curriculum-graph/1",
+  "title": "Sample curriculum",
+  "builtAt": "2026-11-12",
+  "commit": "0000000",
+  "columns": [
+    {"semester": 1, "x": 0.8, "courses": 1, "credits": 3, "blank": 0},
+    {"semester": 2, "x": 10.8, "courses": 2, "credits": 3, "blank": 1}
+  ],
+  "legend": {
+    "groups": [{"key": "core", "label": "Core", "color": "s1"}, {"key": "gen", "label": "General", "color": "s5"}],
+    "focusGroup": "core",
+    "kinds": {"prereq": {"label": "Prerequisite", "desc": "catalog"}}
+  },
+  "nodes": [
+    {"id": "PRG101", "nameEn": "Programming 1", "semester": 1, "credits": 3, "group": "core", "x": 0, "y": 0, "ghost": null},
+    {"id": "PRG201", "nameEn": "Programming 2", "semester": 2, "credits": 3, "group": "core", "x": 10, "y": 0, "ghost": null,
+     "syllabus": {"description": "Objects and modules.", "clos": [{"id": "CLO1", "plos": ["PLO1"], "text": "Write a module."}],
+                  "weeks": [{"n": "1", "content": "Objects", "activity": "Lab 1"}],
+                  "assessment": [{"text": "Final 100%", "weight": 100}], "materials": [], "tech": [], "source": "courses/PRG201.md"}},
+    {"id": "SKL102", "nameEn": "Study skills", "semester": 2, "credits": null, "group": "gen", "x": 10, "y": -3.2, "ghost": null}
+  ],
+  "edges": [
+    {"id": "prereq:PRG101>PRG201", "kind": "prereq", "source": "PRG101", "target": "PRG201", "label": "Prerequisite", "evidence": "catalog: PRG201 needs PRG101", "status": "nguồn"}
+  ]
+}

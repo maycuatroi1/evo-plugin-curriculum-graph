@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bản đồ môn học</title>
+    <!-- The hub's UI kit 1: its tokens in both themes, and window.evo, the bridge evo-plugin/1. -->
+    <link rel="stylesheet" href="/v1/plugin-ui/kit/1/evo-ui.css" />
+    <script src="/v1/plugin-ui/kit/1/evo-ui.js"></script>
+    <link rel="stylesheet" href="graph.css" />
+    <!-- sigma 3.0.2 and graphology 0.25.4, MIT, vendored: the page's CSP loads scripts only from the bundle. -->
+    <script src="vendor/graphology.umd.min.js"></script>
+    <script src="vendor/sigma.min.js"></script>
+    <script src="graph.js" defer></script>
+  </head>
+  <body>
+    <div class="app">
+      <header class="bar">
+        <div class="brand">
+          <h1 id="title">Bản đồ môn học</h1>
+          <p id="subtitle">Quan hệ giữa các môn, vấn đề và ghi chú đánh dấu trên graph</p>
+        </div>
+        <div class="tools">
+          <input id="q" type="search" list="codes" placeholder="Tìm mã hoặc tên môn" aria-label="Tìm môn học" autocomplete="off" />
+          <datalist id="codes"></datalist>
+          <select id="scope" aria-label="Phạm vi hiển thị">
+            <option value="all">Toàn chương trình</option>
+            <option value="focus">Nhóm trọng tâm và môn liên quan</option>
+            <option value="issues">Chỉ môn và quan hệ có vấn đề mở</option>
+          </select>
+        </div>
+        <div class="tally" id="tally"></div>
+      </header>
+      <main class="layout">
+        <section class="stage" id="stage" aria-label="Graph quan hệ giữa các môn">
+          <div id="bands"></div>
+          <div id="sigma"></div>
+          <div id="badges"></div>
+          <details class="legend" id="legend">
+            <summary>Chú giải và bộ lọc</summary>
+            <div class="legend-body" id="legendBody"></div>
+          </details>
+          <div class="zoom">
+            <button id="zin" type="button" aria-label="Phóng to">+</button>
+            <button id="zout" type="button" aria-label="Thu nhỏ">−</button>
+            <button id="zfit" type="button">Vừa khung</button>
+          </div>
+          <div class="stage-note" id="dbNote" hidden><span id="dbNoteText"></span> <button type="button" class="more" id="dbNoteClose">Ẩn</button></div>
+          <div class="stage-msg" id="stageMsg"><div><strong>Đang tải graph...</strong></div></div>
+        </section>
+        <aside class="panel" id="panel" aria-live="polite"></aside>
+      </main>
+    </div>
+  </body>
+</html>

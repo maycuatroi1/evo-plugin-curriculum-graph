@@ -1,71 +1,21 @@
 {
-  "id": "lumen-hello",
-  "version": "0.2.0",
-  "publisher": "lumen",
-  "name": "Lumen hello",
-  "description": "The sample plugin of evo-plugin-template: a greeting a project's admin sets, a page where members leave a wave, kept as records of the hub (collection waves, with a level and an audience the admin sets), a route that reads and records the waves, and an MCP tool that greets someone by name.",
+  "id": "curriculum-graph",
+  "version": "0.1.0",
+  "publisher": "maycuatroi1",
+  "name": "Curriculum graph",
+  "description": "A page that draws the courses of a curriculum as a graph by semester, with prerequisites, co-requisites, hand-offs and other relations, the details of each course and the evidence of each relation. Problems and comments are marked on the graph and members add, answer and resolve them there. The graph comes from the project's harness (schema curriculum-graph/1) and everything is kept as records of the hub.",
   "tier": "isolated",
   "engines": {"evo-agents": ">=0.49"},
   "plugin_api": 1,
   "permissions": ["records:use"],
-  "config": {
-    "type": "object",
-    "properties": {
-      "greeting": {
-        "type": "string",
-        "title": "Greeting",
-        "description": "The word the page and the tool greet with.",
-        "default": "Hello",
-        "maxLength": 40
-      },
-      "wave_level": {
-        "type": "string",
-        "title": "Level of a wave",
-        "description": "The level of the project's ladder each wave is kept at (the collection waves). Empty: the level of the project's default label.",
-        "default": "",
-        "maxLength": 40
-      },
-      "wave_audience": {
-        "type": "string",
-        "title": "Audience of a wave",
-        "description": "everyone: whom the level reaches see the wave; writer: only the person who left it.",
-        "enum": ["everyone", "writer"],
-        "default": "everyone"
-      }
-    }
-  },
-  "backend": {"runtime": "python", "entry": "backend/main.py"},
   "contributes": {
-    "routes": [
-      {
-        "name": "waves",
-        "title": "Waves",
-        "description": "GET answers the project's greeting and its latest waves; POST records a wave, {\"name\": \"...\"}.",
-        "methods": ["GET", "POST"]
-      }
-    ],
-    "mcp_tools": [
-      {
-        "name": "greet",
-        "title": "Greet someone",
-        "description": "Greets someone by name with the greeting the project set, and says how many waves the project's page holds.",
-        "input_schema": {
-          "type": "object",
-          "properties": {
-            "name": {"type": "string", "minLength": 1, "maxLength": 80, "description": "Who to greet."}
-          },
-          "required": ["name"],
-          "additionalProperties": false
-        }
-      }
-    ],
     "pages": [
       {
-        "name": "hello",
-        "title": "Hello",
-        "description": "The project's greeting and the waves its members left.",
-        "icon": "message-square",
-        "entry": "pages/hello/index.html"
+        "name": "graph",
+        "title": "Bản đồ môn học",
+        "description": "The courses as a graph by semester, their relations and details, and the problems and comments marked on them.",
+        "icon": "workflow",
+        "entry": "pages/graph/index.html"
       }
     ]
   }
