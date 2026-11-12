@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "curriculum-graph/1",
+  "title": "curriculum-graph/1",
+  "description": "The graph a harness pushes to the plugin curriculum-graph, as the JSON its parts join into (README, Records). The page reads only the keys below; a harness may add others.",
+  "type": "object",
+  "required": ["schema", "title", "builtAt", "columns", "nodes", "edges"],
+  "properties": {
+    "schema": {"const": "curriculum-graph/1"},
+    "title": {"type": "string", "description": "The page's heading."},
+    "subtitle": {"type": "string"},
+    "badge": {"type": "string", "description": "A short status shown in the overview, such as Bản nháp."},
+    "builtAt": {"type": "string", "description": "YYYY-MM-DD the harness built the graph."},
+    "commit": {"type": "string", "description": "The harness commit the graph comes from."},
+    "program": {
+      "type": "object",
+      "properties": {"title": {"type": "string"}, "summary": {"type": "string"}}
+    },
+    "columns": {
+      "type": "array",
+      "description": "One per semester: its x on the graph, its course count, the credits that have a number and how many courses have none.",
+      "items": {
+        "type": "object",
+        "required": ["semester", "x", "courses", "credits", "blank"],
+        "properties": {
+          "semester": {"type": "integer"},
+          "x": {"type": "number"},
+          "courses": {"type": "integer"},
+          "credits": {"type": "number"},
+          "blank": {"type": "integer"}
+        }
+      }
+    },
+    "legend": {
+      "type": "object",
+      "properties": {
+        "groupTitle": {"type": "string"},
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["key", "label"],
+            "properties": {
+              "key": {"type": "string"},
+              "label": {"type": "string"},
+              "color": {"enum": ["s1", "s2", "s3", "s4", "s5"]}
+            }
+          }
+        },
+        "focusGroup": {"type": "string", "description": "The group the scope Nhóm trọng tâm shows with its neighbours."},
+        "kinds": {"type": "object", "description": "kind -> {label, desc}: the words of each kind of relation."},
+        "categories": {"type": "array", "items": {"type": "object", "required": ["key", "label"]}},
+        "slotLabel": {"type": "string"},
+        "ghostLabel": {"type": "string"},
+        "columnPrefix": {"type": "string"},
+        "columnLabels": {"type": "object"},
+        "columnWidth": {"type": "number"}
+      }
+    },
+    "notes": {"type": "array", "items": {"type": "string"}},
+    "sourceNote": {"type": "string"},
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "x", "y", "group"],
+        "properties": {
+          "id": {"type": "string", "description": "The course code."},
+          "nameVi": {"type": "string"},
+          "nameEn": {"type": "string"},
+          "semester": {"type": ["integer", "null"]},
+          "credits": {"type": ["number", "null"], "description": "null: the curriculum gives no number."},
+          "group": {"type": "string"},
+          "x": {"type": "number"},
+          "y": {"type": "number"},
+          "slotCourse": {"type": "boolean", "description": "An elective slot rather than a course."},
+          "ghost": {"enum": [null, "missing", "merged"], "description": "missing: a code named as a prerequisite but not in the catalog; merged: a course merged into another."},
+          "prereqText": {"type": ["string", "null"]},
+          "prereqRule": {"type": ["string", "null"]},
+          "change": {"type": ["object", "null"], "properties": {"change": {"type": "string"}, "note": {"type": "string"}}},
+          "table1": {"type": ["object", "null"], "properties": {"source": {"type": "string"}, "knowledge": {"type": "string"}, "skills": {"type": "string"}, "outcome": {"type": "string"}, "deps": {"type": "string"}}},
+          "syllabus": {
+            "type": ["object", "null"],
+            "required": ["description", "clos", "weeks", "assessment", "materials", "tech", "source"],
+            "properties": {
+              "info": {"type": "object"},
+              "description": {"type": "string"},
+              "clos": {"type": "array", "items": {"type": "object", "required": ["id", "plos", "text"]}},
+              "planTitle": {"type": ["string", "null"]},
+              "weeks": {"type": "array", "items": {"type": "object", "required": ["n", "content", "activity"]}},
+              "assessTitle": {"type": ["string", "null"]},
+              "assessment": {"type": "array", "items": {"type": "object", "required": ["text", "weight"]}},
+              "materials": {"type": "array", "items": {"type": "string"}},
+              "tech": {"type": "array", "items": {"type": "string"}},
+              "source": {"type": "string"}
+            }
+          },
+          "sources": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "source", "target"],
+        "properties": {
+          "id": {"type": "string", "description": "kind:SOURCE>TARGET; a thread targets it as edge:<id>."},
+          "kind": {"enum": ["prereq", "coreq", "handoff", "support", "merge", "overlap", "implicit"]},
+          "source": {"type": "string"},
+          "target": {"type": "string"},
+          "label": {"type": "string"},
+          "alternatives": {"type": ["string", "null"], "description": "A prerequisite written as one of several codes."},
+          "missing": {"type": "boolean"},
+          "evidence": {"type": "string", "description": "The source words the relation rests on."},
+          "status": {"enum": ["nguồn", "quan sát", "suy luận", "chưa kiểm chứng", "cần quyết định"]}
+        }
+      }
+    }
+  }
+}
